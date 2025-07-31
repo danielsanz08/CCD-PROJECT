@@ -1,0 +1,23 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block contenido %}
+<link rel="stylesheet" href="{% static 'css/devolucion.css' %}?v={% now 'U' %}">
+
+{% if pedido %}
+<section>
+    <h4>Detalles del Pedido #{{ pedido.id }} (CDE)</h4>
+
+    <form method="post" style="flex: 1; display: flex; flex-direction: column;">
+        {% csrf_token %}
+        <div class="devolucion-form">
+            {{ form.as_p }}
+        </div>
+        <div class="botones-principales" style="margin-top: auto;">
+            <button type="submit">Registrar devolución</button>
+        </div>
+    </form>
+</section>
+{% endif %}
+
+{% endblock %}

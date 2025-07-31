@@ -1,0 +1,39 @@
+{% extends 'navbar.html' %}
+{% load static %}
+
+{% block contenido %}
+<link rel="stylesheet" href="{% static 'css/devolucion.css' %}?v={% now 'U' %}">
+<style>
+    body.dark section{
+    background: linear-gradient(110deg, #717f8f93, #6e6e6ee8);
+    color: white;
+}
+body.dark h4{
+    color: white;
+}
+</style>
+{% if pedido %}
+<section>
+    <ul>
+        <h4>Registrar Devolución del Pedido #{{ pedido.id }}</h4>
+        {% for pa in pedido.pedidoarticulo_set.all %}
+            <li>{{ pa.articulo.nombre }} - Cantidad: {{ pa.cantidad }}</li>
+        {% endfor %}
+    </ul>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div id="devoluciones-container">
+            <div class="devolucion-form default-form">
+                {{ form.as_p }}
+            </div>
+        </div>
+
+        <div class="botones-principales">
+            <button type="submit" id="registrar">Registrar devolución</button>
+        </div>
+    </form>
+</section>
+{% endif %}
+{% endblock %}
